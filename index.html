@@ -3,69 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deliver All Inc. | Sovereign Link SDK</title>
+    <title>Deliver All Inc. // Core Node</title>
     <style>
-        body { 
-            background-color: #0b0f19; 
-            color: #f3f4f6; 
-            font-family: 'Courier New', Courier, monospace; 
-            padding: 40px; 
-            line-height: 1.6;
+        /* Premium Web Materials: Matte Titanium & Carbon Micro-Texture */
+        body {
+            background-color: #0a0c10;
+            background-image: 
+                linear-gradient(90deg, rgba(18,24,38,0.2) 1px, transparent 1px),
+                linear-gradient(rgba(18,24,38,0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #e2e8f0;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
+
+        .terminal-container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(13, 17, 23, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 163, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 255, 163, 0.05);
+            border-radius: 8px;
+            padding: 35px;
+            box-sizing: border-box;
         }
-        .secure-badge { 
-            color: #10b981; 
-            font-weight: bold; 
-            letter-spacing: 1px;
+
+        /* Official Logo Framework Placeholder */
+        .brand-emblem {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px auto;
+            border: 2px dashed #0055ff;
+            border-radius: 50px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0, 85, 255, 0.2);
         }
-        .accent { 
-            color: #f59e0b; 
+        .brand-emblem::before {
+            content: '';
+            position: absolute;
+            width: 90px;
+            height: 30px;
+            border: 2px solid #00ffaa;
+            border-radius: 50%;
+            transform: rotate(-25deg);
         }
-        .header-block {
-            border-bottom: 2px solid #1e293b;
-            padding-bottom: 20px;
+
+        .header-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin: 0 0 15px 0;
+            text-align: center;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        /* Luminous Synchronization Banner */
+        .status-banner {
+            color: #00ffaa;
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 8px rgba(0, 255, 170, 0.4);
+            text-transform: uppercase;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 163, 0.3), transparent);
             margin-bottom: 30px;
         }
-        pre { 
-            background-color: #1e293b; 
-            padding: 20px; 
-            border-left: 4px solid #3b82f6; 
-            overflow-x: auto;
-            color: #38bdf8;
+
+        .content-text {
+            line-height: 1.8;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            margin-bottom: 25px;
+            text-align: justify;
         }
-        .footer {
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid #1e293b;
-            font-size: 0.9em;
-            color: #9ca3af;
+
+        .highlight-text {
+            color: #ffaa00;
+            font-weight: bold;
+        }
+
+        .meta-status {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            margin-bottom: 35px;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin: 35px 0 15px 0;
+            letter-spacing: 1px;
+        }
+
+        /* Interactive Developer Integration Module */
+        .code-block {
+            background: #07090e;
+            border-left: 3px solid #0055ff;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #38bdf8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #38bdf8;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(56, 189, 248, 0.1);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+        }
+
+        .secure-gate-text {
+            line-height: 1.8;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+
+        .email-anchor {
+            display: block;
+            text-align: center;
+            background: rgba(0, 85, 255, 0.1);
+            border: 1px solid rgba(0, 85, 255, 0.3);
+            color: #38bdf8;
+            padding: 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+
+        .email-anchor:hover {
+            background: rgba(0, 85, 255, 0.2);
+            border-color: #0055ff;
+            box-shadow: 0 0 12px rgba(0, 85, 255, 0.4);
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header-block">
-            <h1>Deliver All Inc.</h1>
-            <p class="secure-badge">[SUPER SOVEREIGN SYNCHRONIZATION ENABLED]</p>
-        </div>
-        
-        <p>The <span class="accent">Sovereign Link SDK</span> is an enterprise-tier, decentralized identity utility engineered to deliver zero-knowledge verification across high-security infrastructures.</p>
-        <p><strong>Status:</strong> PATENT PENDING // CORE ACTIVE</p>
-        
-        <h2>Developer Integration</h2>
-        <p>To integrate the Sovereign Link identity verification pipeline into your environment, initialize the secure package:</p>
-        <pre>npm install @deliverall/sovereign-link-sdk</pre>
-        
-        <h2>Secure Communications Gate</h2>
-        <p>For sandbox environment access tokens, technical protocol documentation, or corporate pilot evaluations, route formal inquiries directly to the executive node:</p>
-        <pre>deliverallinc.ceo.vholmes@proton.me</pre>
-        
-        <div class="footer">
-            <p>&copy; 2026 Deliver All Inc. All rights reserved. Sharded Logic Security Protocols Active.</p>
-        </div>
+
+<div class="terminal-container">
+    <!-- Top Brand Asset: Styled CSS Blueprint mimicking the official globe & single diagonal ring -->
+    <div class="brand-emblem"></div>
+
+    <h1 class="header-title">Deliver All Inc.</h1>
+    <div class="status-banner">[SUPER SOVEREIGN SYNCHRONIZATION ENABLED]</div>
+    <div class="divider"></div>
+
+    <p class="content-text">
+        The <span class="highlight-text">Sovereign Link SDK</span> is an enterprise-tier, decentralized identity utility engineered to deliver zero-knowledge verification across high-security infrastructures.
+    </p>
+
+    <div class="meta-status">
+        <strong>Status:</strong> PATENT PENDING // CORE ACTIVE
     </div>
+
+    <h2 class="section-subtitle">Developer Integration</h2>
+    <p class="content-text">
+        To integrate the Sovereign Link identity verification pipeline into your environment, initialize the secure package:
+    </p>
+
+    <div class="code-block">
+        <span>npm install @deliverall/sovereign-link-sdk</span>
+        <button class="copy-btn" onclick="navigator.clipboard.writeText('npm install @deliverall/sovereign-link-sdk')">COPY</button>
+    </div>
+
+    <h2 class="section-subtitle">Secure Communications Gate</h2>
+    <p class="secure-gate-text">
+        For sandbox environment access tokens, technical protocol documentation, or corporate pilot evaluations, route formal inquiries directly to the executive node:
+    </p>
+
+    <a href="mailto:deliverallinc.ceo.vholmes@proton.me" class="email-anchor">
+        deliverallinc.ceo.vholmes@proton.me
+    </a>
+</div>
+
 </body>
 </html>
