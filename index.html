@@ -214,7 +214,7 @@
             <h2>Zero Data Retention. Maximum Regulatory Compliance.</h2>
             
             <div class="lead-quote">
-                <p><strong>Stop storing compliance liabilities.</strong> The regulatory landscape has shifted. Under current FTC directives and state Digital Age Assurance mandates, holding user ID copies or raw date-of-birth records is no longer a security practice—it is an enterprise risk. Deliver All Inc. introduces <strong>Sovereign Link SDK</strong>: a frictionless, high-speed verification gateway that proves a user meets age requirements cryptographically, without retaining a single byte of identity data on your servers.</p>
+                <p><strong>Stop storing compliance liabilities.</strong> The regulatory landscape has shifted. Under current FTC directives and state Digital Age Assurance mandates, holding user ID co[...]
             </div>
         </section>
 
@@ -222,15 +222,15 @@
         <section class="features-grid">
             <div class="card">
                 <h3>🛡️ Sharded Logic Security (SLS)</h3>
-                <p>We don't build data honeypots. Sovereign Link utilizes advanced zero-knowledge threshold checks to verify compliance locally and cryptographically. The moment the check is complete, the verification token is passed, and user data is entirely purged from existence.</p>
+                <p>We don't build data honeypots. Sovereign Link utilizes advanced zero-knowledge threshold checks to verify compliance locally and cryptographically. The moment the check is complete,[...]
             </div>
             <div class="card">
                 <h3>⚡ Frictionless Developer Integration</h3>
-                <p>Deploy in minutes, not months. With a lightweight SDK wrapper designed for modern engineering stacks, your team can integrate secure age assurance with a simple npm install deployment framework.</p>
+                <p>Deploy in minutes, not months. With a lightweight SDK wrapper designed for modern engineering stacks, your team can integrate secure age assurance with a simple npm install deployme[...]
             </div>
             <div class="card">
                 <h3>⚖️ Instant 2026 Compliance Protection</h3>
-                <p>Instantly align your platform with the latest FTC policy frameworks and strict state-level privacy mandates. Protect your corporate assets from massive statutory fines while boosting user trust through absolute data sovereignty.</p>
+                <p>Instantly align your platform with the latest FTC policy frameworks and strict state-level privacy mandates. Protect your corporate assets from massive statutory fines while boostin[...]
             </div>
         </section>
 
@@ -259,6 +259,106 @@
         </section>
 
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Map Interface Nodes
+            const startStreamBtn = document.getElementById('start-stream-btn');
+            const videoPreview = document.getElementById('shared-screen-stream');
+            const previewPlaceholder = document.getElementById('preview-placeholder');
+            const connectionStatus = document.getElementById('connection-status');
+            const logOutput = document.getElementById('stream-log-output');
+
+            let activeCaptureStream = null;
+
+            // 2. Define Stream Initialization Sequence
+            async function initializeVisionBridge() {
+                logOutput.innerText = "Requesting device permission for MediaStream capture...";
+                logOutput.style.color = "#38bdf8";
+
+                // Optimize constraints for text/code visibility and low-bandwidth transport
+                const displayMediaOptions = {
+                    video: {
+                        displaySurface: "window", // Prefer capturing the specific app/window
+                        frameRate: 2,             // Throttle to 2 FPS to optimize AI packet processing
+                        cursor: "always"          // Ensure the developer's cursor tracking is visible
+                    },
+                    audio: false // Pure visual telemetry for this module
+                };
+
+                try {
+                    // Trigger the native browser/OS media selector
+                    activeCaptureStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+                    
+                    // Mount stream into the video element
+                    videoPreview.srcObject = activeCaptureStream;
+                    
+                    // Swap visibility states from placeholder to live player
+                    previewPlaceholder.style.display = 'none';
+                    videoPreview.style.display = 'block';
+                    
+                    // Update UI telemetry status markers
+                    connectionStatus.innerText = "STREAM LIVE";
+                    connectionStatus.style.background = "rgba(56, 189, 248, 0.2)";
+                    connectionStatus.style.color = "#38bdf8";
+                    logOutput.innerText = "Sovereign Vision pipeline successfully mounted. Telemetry link operational.";
+                    logOutput.style.color = "#27c93f";
+                    
+                    // Update control button state
+                    startStreamBtn.innerText = "Terminate Live Screen Bridge";
+                    startStreamBtn.style.background = "#ff5f56";
+                    startStreamBtn.style.color = "#ffffff";
+
+                    // 3. Handle Edge Case: User clicks native browser "Stop Sharing" button
+                    activeCaptureStream.getVideoTracks()[0].onended = () => {
+                        terminateVisionBridge();
+                    };
+
+                } catch (error) {
+                    // Error mitigation and log feedback
+                    console.error("Sovereign Vision Pipeline Initialization Failed:", error);
+                    connectionStatus.innerText = "PIPELINE FAILED";
+                    connectionStatus.style.background = "rgba(255, 95, 86, 0.2)";
+                    connectionStatus.style.color = "#ff5f56";
+                    logOutput.innerText = `Initialization aborted: ${error.message}`;
+                    logOutput.style.color = "#ff5f56";
+                }
+            }
+
+            // 4. Define Termination Sequence
+            function terminateVisionBridge() {
+                if (activeCaptureStream) {
+                    // Halt all active hardware/software media tracks
+                    activeCaptureStream.getTracks().forEach(track => track.stop());
+                    activeCaptureStream = null;
+                }
+
+                // Reset elements back to baseline security layout
+                videoPreview.srcObject = null;
+                videoPreview.style.display = 'none';
+                previewPlaceholder.style.display = 'flex';
+                
+                connectionStatus.innerText = "PIPELINE READY";
+                connectionStatus.style.background = "rgba(34, 197, 94, 0.2)";
+                connectionStatus.style.color = "#22c55e";
+                logOutput.innerText = "Stream safely terminated. Core interface returned to standalone state.";
+                logOutput.style.color = "#9da5b4";
+
+                startStreamBtn.innerText = "Initialize Live Screen Bridge";
+                startStreamBtn.style.background = "#38bdf8";
+                startStreamBtn.style.color = "#121316";
+            }
+
+            // 5. Connect Interface Action Router
+            startStreamBtn.addEventListener('click', () => {
+                if (!activeCaptureStream) {
+                    initializeVisionBridge();
+                } else {
+                    terminateVisionBridge();
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
