@@ -3,216 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deliver All Inc. // Core Node</title>
+    <title>Deliver All Inc. | Sovereign Link SDK</title>
     <style>
-        /* Premium Web Materials: Matte Titanium & Carbon Micro-Texture */
+        :root {
+            --bg-main: #121316;
+            --bg-card: #1c1d21;
+            --titanium-light: #e4e6eb;
+            --titanium-muted: #9da5b4;
+            --accent-blue: #38bdf8;
+            --border-metal: #3a3f47;
+            --terminal-nav: #282a30;
+        }
+
         body {
-            background-color: #0a0c10;
-            background-image: 
-                linear-gradient(90deg, rgba(18,24,38,0.2) 1px, transparent 1px),
-                linear-gradient(rgba(18,24,38,0.2) 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: #e2e8f0;
-            font-family: 'Courier New', Courier, monospace;
             margin: 0;
+            padding: 0;
+            background-color: var(--bg-main);
+            color: var(--titanium-light);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
             padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
         }
 
-        .terminal-container {
-            max-width: 600px;
-            width: 100%;
-            background: rgba(13, 17, 23, 0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 163, 0.15);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 255, 163, 0.05);
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 10px;
+            color: var(--titanium-light);
+        }
+
+        .hero h2 {
+            font-size: 1.75rem;
+            font-weight: 400;
+            color: var(--accent-blue);
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .lead-quote {
+            background: linear-gradient(135deg, #1e2024, #15171a);
+            border-left: 4px solid var(--accent-blue);
+            padding: 24px;
+            border-radius: 0 8px 8px 0;
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .lead-quote p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--titanium-muted);
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-metal);
             border-radius: 8px;
-            padding: 35px;
-            box-sizing: border-box;
+            padding: 30px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
-        /* Official Logo Framework Placeholder */
-        .brand-emblem {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 25px auto;
-            border: 2px dashed #0055ff;
-            border-radius: 50px;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 15px rgba(0, 85, 255, 0.2);
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
         }
-        .brand-emblem::before {
-            content: '';
-            position: absolute;
-            width: 90px;
-            height: 30px;
-            border: 2px solid #00ffaa;
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--titanium-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card p {
+            color: var(--titanium-muted);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Terminal Component */
+        .terminal-window {
+            background-color: #0b0c0e;
+            border: 1px solid var(--border-metal);
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-header {
+            background-color: var(--terminal-nav);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-metal);
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            transform: rotate(-25deg);
+        }
+        .dot-red { background-color: #ff5f56; }
+        .dot-yellow { background-color: #ffbd2e; }
+        .dot-green { background-color: #27c93f; }
+
+        .terminal-title {
+            margin: 0 auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--titanium-muted);
+            transform: translateX(-16px);
         }
 
-        .header-title {
+        .terminal-body {
+            padding: 24px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #f8f8f2;
+        }
+
+        .command { color: var(--accent-blue); }
+        .output { color: #27c93f; }
+
+        /* Call To Action */
+        .cta-section {
+            text-align: center;
+            background: radial-gradient(circle at center, #1c1d21 0%, #121316 100%);
+            border: 1px solid var(--border-metal);
+            padding: 50px 30px;
+            border-radius: 12px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
             font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            color: var(--titanium-muted);
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        .btn-executive {
+            display: inline-block;
+            background-color: var(--titanium-light);
+            color: var(--bg-main);
             font-weight: 700;
-            letter-spacing: 2px;
-            margin: 0 0 15px 0;
-            text-align: center;
-            color: #ffffff;
-            text-transform: uppercase;
-        }
-
-        /* Luminous Synchronization Banner */
-        .status-banner {
-            color: #00ffaa;
-            font-size: 0.85rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 0 0 8px rgba(0, 255, 170, 0.4);
-            text-transform: uppercase;
-        }
-
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 163, 0.3), transparent);
-            margin-bottom: 30px;
-        }
-
-        .content-text {
-            line-height: 1.8;
-            font-size: 0.95rem;
-            color: #cbd5e1;
-            margin-bottom: 25px;
-            text-align: justify;
-        }
-
-        .highlight-text {
-            color: #ffaa00;
-            font-weight: bold;
-        }
-
-        .meta-status {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            letter-spacing: 1px;
-            margin-bottom: 35px;
-        }
-
-        .section-subtitle {
-            font-size: 1.3rem;
-            color: #ffffff;
-            margin: 35px 0 15px 0;
-            letter-spacing: 1px;
-        }
-
-        /* Interactive Developer Integration Module */
-        .code-block {
-            background: #07090e;
-            border-left: 3px solid #0055ff;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            border-right: 1px solid rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding: 16px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            color: #38bdf8;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 35px;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
-        }
-
-        .copy-btn {
-            background: transparent;
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            color: #38bdf8;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.2s ease;
-        }
-
-        .copy-btn:hover {
-            background: rgba(56, 189, 248, 0.1);
-            box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
-        }
-
-        .secure-gate-text {
-            line-height: 1.8;
-            font-size: 0.95rem;
-            color: #cbd5e1;
-            margin-bottom: 20px;
-        }
-
-        .email-anchor {
-            display: block;
-            text-align: center;
-            background: rgba(0, 85, 255, 0.1);
-            border: 1px solid rgba(0, 85, 255, 0.3);
-            color: #38bdf8;
-            padding: 12px;
-            border-radius: 6px;
             text-decoration: none;
-            font-weight: bold;
-            letter-spacing: 1px;
-            transition: all 0.2s ease;
+            padding: 14px 32px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 14px rgba(255, 255, 255, 0.1);
         }
 
-        .email-anchor:hover {
-            background: rgba(0, 85, 255, 0.2);
-            border-color: #0055ff;
-            box-shadow: 0 0 12px rgba(0, 85, 255, 0.4);
-            color: #ffffff;
+        .btn-executive:hover {
+            background-color: #ffffff;
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero h2 { font-size: 1.4rem; }
+            .features-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<div class="terminal-container">
-    <!-- Top Brand Asset: Styled CSS Blueprint mimicking the official globe & single diagonal ring -->
-    <div class="brand-emblem"></div>
+    <div class="container">
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>The Zero-Knowledge Age Gate.</h1>
+            <h2>Zero Data Retention. Maximum Regulatory Compliance.</h2>
+            
+            <div class="lead-quote">
+                <p><strong>Stop storing compliance liabilities.</strong> The regulatory landscape has shifted. Under current FTC directives and state Digital Age Assurance mandates, holding user ID copies or raw date-of-birth records is no longer a security practice—it is an enterprise risk. Deliver All Inc. introduces <strong>Sovereign Link SDK</strong>: a frictionless, high-speed verification gateway that proves a user meets age requirements cryptographically, without retaining a single byte of identity data on your servers.</p>
+            </div>
+        </section>
 
-    <h1 class="header-title">Deliver All Inc.</h1>
-    <div class="status-banner">[SUPER SOVEREIGN SYNCHRONIZATION ENABLED]</div>
-    <div class="divider"></div>
+        <!-- Features Section -->
+        <section class="features-grid">
+            <div class="card">
+                <h3>🛡️ Sharded Logic Security (SLS)</h3>
+                <p>We don't build data honeypots. Sovereign Link utilizes advanced zero-knowledge threshold checks to verify compliance locally and cryptographically. The moment the check is complete, the verification token is passed, and user data is entirely purged from existence.</p>
+            </div>
+            <div class="card">
+                <h3>⚡ Frictionless Developer Integration</h3>
+                <p>Deploy in minutes, not months. With a lightweight SDK wrapper designed for modern engineering stacks, your team can integrate secure age assurance with a simple npm install deployment framework.</p>
+            </div>
+            <div class="card">
+                <h3>⚖️ Instant 2026 Compliance Protection</h3>
+                <p>Instantly align your platform with the latest FTC policy frameworks and strict state-level privacy mandates. Protect your corporate assets from massive statutory fines while boosting user trust through absolute data sovereignty.</p>
+            </div>
+        </section>
 
-    <p class="content-text">
-        The <span class="highlight-text">Sovereign Link SDK</span> is an enterprise-tier, decentralized identity utility engineered to deliver zero-knowledge verification across high-security infrastructures.
-    </p>
+        <!-- Terminal Window Section -->
+        <section class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                </div>
+                <div class="terminal-title">bash — sovereign-link-init</div>
+            </div>
+            <div class="terminal-body">
+                <div>$ <span class="command">npm install @deliverall/sovereign-link-sdk</span></div>
+                <div>$ <span class="command">sovereign-link --initialize --mode=zero-retention</span></div>
+                <div class="output">> [SUCCESS] SLS Extreme X Gateway Active // Perimeter Secured</div>
+            </div>
+        </section>
 
-    <div class="meta-status">
-        <strong>Status:</strong> PATENT PENDING // CORE ACTIVE
+        <!-- Call To Action Section -->
+        <section class="cta-section">
+            <h2>Ready to Secure Your Enterprise Perimeter?</h2>
+            <p>Don't wait for a regulatory audit or a costly data breach to force your hand. Secure your sandbox environment access tokens or request a formal corporate pilot evaluation today.</p>
+            <a href="mailto:executive@deliverallinc.com" class="btn-executive">Route an Executive Inquiry</a>
+        </section>
+
     </div>
-
-    <h2 class="section-subtitle">Developer Integration</h2>
-    <p class="content-text">
-        To integrate the Sovereign Link identity verification pipeline into your environment, initialize the secure package:
-    </p>
-
-    <div class="code-block">
-        <span>npm install @deliverall/sovereign-link-sdk</span>
-        <button class="copy-btn" onclick="navigator.clipboard.writeText('npm install @deliverall/sovereign-link-sdk')">COPY</button>
-    </div>
-
-    <h2 class="section-subtitle">Secure Communications Gate</h2>
-    <p class="secure-gate-text">
-        For sandbox environment access tokens, technical protocol documentation, or corporate pilot evaluations, route formal inquiries directly to the executive node:
-    </p>
-
-    <a href="mailto:deliverallinc.ceo.vholmes@proton.me" class="email-anchor">
-        deliverallinc.ceo.vholmes@proton.me
-    </a>
-</div>
 
 </body>
 </html>
