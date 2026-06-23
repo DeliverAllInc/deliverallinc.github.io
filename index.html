@@ -261,6 +261,78 @@
     </div>
 
     <script>
+        // ========================================================
+        // DELIVER ALL INC. — SECURE FRAME SERIALIZATION ENGINE
+        // ========================================================
+        let webSocketGateway = null;
+        let serializationInterval = null;
+
+        // Create a hidden canvas element in memory to process and compress the image frames
+        const processingCanvas = document.createElement('canvas');
+        const canvasContext = processingCanvas.getContext('2d');
+
+        function startFrameSerialization(videoElement) {
+            // Connect to your secure backend WebSocket gateway 
+            // (Replace with your secure live domain when your backend node is deployed)
+            const gatewayURL = "wss://api.deliverallinc.com/v1/vision/stream";
+            
+            // For local staging/testing, developers use: "ws://localhost:8080"
+            webSocketGateway = new WebSocket(gatewayURL);
+
+            webSocketGateway.onopen = () => {
+                document.getElementById('stream-log-output').innerText = "Encrypted WebSocket tunnel established. Streaming telemetry packets...";
+                document.getElementById('stream-log-output').style.color = "#27c93f";
+            };
+
+            webSocketGateway.onerror = (err) => {
+                console.error("Gateway Connection Error:", err);
+            };
+
+            // Initialize the processing loop at 2 frames per second (every 500ms)
+            serializationInterval = setInterval(() => {
+                if (videoElement.readyState === videoElement.HAVE_CURRENT_DATA && webSocketGateway.readyState === WebSocket.OPEN) {
+                    
+                    // Set canvas dimensions to match the active stream resolution
+                    processingCanvas.width = videoElement.videoWidth;
+                    processingCanvas.height = videoElement.videoHeight;
+                    
+                    // Draw the current video frame onto our hidden memory canvas
+                    canvasContext.drawImage(videoElement, 0, 0, processingCanvas.width, processingCanvas.height);
+                    
+                    // Compress the frame to a lightweight, high-performance JPEG string (Quality: 60%)
+                    const compressedFrame64 = processingCanvas.toDataURL('image/jpeg', 0.60);
+                    
+                    // Package the image frame with proprietary metadata headers for SLS verification
+                    const dataPacket = JSON.stringify({
+                        origin: "DA-VISION-CONSOLE-V1",
+                        timestamp: Date.now(),
+                        payload: compressedFrame64
+                    });
+                    
+                    // Push the serialized packet across the encrypted pipeline
+                    webSocketGateway.send(dataPacket);
+                }
+            }, 500); // 500ms interval creates the exact optimized 2 FPS pipeline
+        }
+
+        function stopFrameSerialization() {
+            // Clear the active execution loop
+            if (serializationInterval) {
+                clearInterval(serializationInterval);
+                serializationInterval = null;
+            }
+            // Safely tear down the WebSocket channel
+            if (webSocketGateway) {
+                if (webSocketGateway.readyState === WebSocket.OPEN) {
+                    webSocketGateway.close();
+                }
+                webSocketGateway = null;
+            }
+        }
+
+        // ========================================================
+        // VISION BRIDGE INTEGRATION
+        // ========================================================
         document.addEventListener('DOMContentLoaded', () => {
             // 1. Map Interface Nodes
             const startStreamBtn = document.getElementById('start-stream-btn');
@@ -309,6 +381,9 @@
                     startStreamBtn.style.background = "#ff5f56";
                     startStreamBtn.style.color = "#ffffff";
 
+                    // Initialize Frame Serialization Engine
+                    startFrameSerialization(videoPreview);
+
                     // 3. Handle Edge Case: User clicks native browser "Stop Sharing" button
                     activeCaptureStream.getVideoTracks()[0].onended = () => {
                         terminateVisionBridge();
@@ -332,6 +407,9 @@
                     activeCaptureStream.getTracks().forEach(track => track.stop());
                     activeCaptureStream = null;
                 }
+
+                // Terminate Frame Serialization Engine
+                stopFrameSerialization();
 
                 // Reset elements back to baseline security layout
                 videoPreview.srcObject = null;
