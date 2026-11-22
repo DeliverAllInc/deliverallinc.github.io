@@ -1,1 +1,702 @@
-Update Odds Vary™ frontend (index.html) for Deliver All Inc. with one-touch game scan, 5,000-trial payout probability scoring, $0.99 safe list checkout link, and sub-ID referral attribution.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Odds Vary™ — The One-Touch Truth Engine | Deliver All Inc.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-obsidian: #07090D;
+      --bg-surface: #0F131A;
+      --bg-elevated: #161C26;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(16, 185, 129, 0.45);
+      --emerald: #10B981;
+      --emerald-bright: #34D399;
+      --emerald-dim: rgba(16, 185, 129, 0.14);
+      --amber: #F59E0B;
+      --amber-dim: rgba(245, 158, 11, 0.14);
+      --crimson: #EF4444;
+      --crimson-dim: rgba(239, 68, 68, 0.14);
+      --text-primary: #F8FAFC;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-obsidian);
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 55%),
+        radial-gradient(circle at 85% 90%, rgba(16, 185, 129, 0.05) 0%, transparent 45%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 48px;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 560px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .brand-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 16px;
+      margin-bottom: 28px;
+    }
+
+    .shield-logo {
+      width: 84px;
+      height: 84px;
+      margin-bottom: 14px;
+      filter: drop-shadow(0 0 22px rgba(16, 185, 129, 0.35));
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+
+    .shield-logo.scanning {
+      animation: pulseShield 0.9s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseShield {
+      from {
+        transform: scale(0.97);
+        filter: drop-shadow(0 0 14px rgba(16, 185, 129, 0.3));
+      }
+      to {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 32px rgba(52, 211, 153, 0.75));
+      }
+    }
+
+    .brand-title {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .brand-tagline {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      max-width: 400px;
+    }
+
+    .search-card {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+    }
+
+    .input-bubble-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--bg-obsidian);
+      border: 1.5px solid rgba(16, 185, 129, 0.35);
+      border-radius: 999px;
+      padding: 6px 8px 6px 20px;
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.12);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .input-bubble-wrap:focus-within {
+      border-color: var(--emerald-bright);
+      box-shadow: 0 0 32px rgba(16, 185, 129, 0.28);
+    }
+
+    .input-bubble {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 10px 8px 10px 0;
+      min-width: 0;
+    }
+
+    .input-bubble::placeholder {
+      color: var(--text-muted);
+    }
+
+    .clear-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 6px 10px;
+      display: none;
+    }
+
+    .clear-btn.visible {
+      display: inline-block;
+    }
+
+    .push-start-btn {
+      width: 100%;
+      margin-top: 14px;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--emerald) 0%, #059669 100%);
+      color: #03140D;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 26px rgba(16, 185, 129, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .push-start-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 32px rgba(16, 185, 129, 0.5);
+      filter: brightness(1.06);
+    }
+
+    .push-start-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .chip {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip:hover {
+      border-color: var(--emerald);
+      color: var(--text-primary);
+    }
+
+    .scan-status {
+      display: none;
+      width: 100%;
+      margin-top: 20px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glow);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .scan-status.active {
+      display: block;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-obsidian);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 14px 0 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--emerald), var(--emerald-bright));
+      transition: width 0.25s ease;
+    }
+
+    .scan-telemetry-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--emerald-bright);
+    }
+
+    .verdict-card {
+      display: none;
+      width: 100%;
+      margin-top: 20px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+      animation: slideUp 0.35s ease;
+    }
+
+    .verdict-card.visible {
+      display: block;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .verdict-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .game-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .game-name-display {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-top: 2px;
+    }
+
+    .verdict-pill {
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tier-viable .verdict-pill {
+      background: var(--emerald-dim);
+      color: var(--emerald-bright);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .tier-grind .verdict-pill {
+      background: var(--amber-dim);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .tier-predatory .verdict-pill {
+      background: var(--crimson-dim);
+      color: var(--crimson);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .score-box {
+      background: var(--bg-obsidian);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .score-number {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .tier-viable .score-number { color: var(--emerald-bright); }
+    .tier-grind .score-number { color: var(--amber); }
+    .tier-predatory .score-number { color: var(--crimson); }
+
+    .score-caption {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .metric-item {
+      background: var(--bg-elevated);
+      border-radius: 14px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+
+    .metric-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .metric-lbl {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .flags-section {
+      margin-bottom: 20px;
+    }
+
+    .flags-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .flag-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .flag-list li {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid var(--emerald);
+      padding: 9px 12px;
+      border-radius: 0 10px 10px 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .tier-grind .flag-list li { border-left-color: var(--amber); }
+    .tier-predatory .flag-list li { border-left-color: var(--crimson); }
+
+    .monetization-box {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 19, 26, 0.95) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .monetization-heading {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .monetization-sub {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .stripe-checkout-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: var(--emerald);
+      color: #03140D;
+      font-weight: 800;
+      font-size: 0.92rem;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+      transition: transform 0.15s ease, filter 0.2s ease;
+    }
+
+    .stripe-checkout-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+    }
+
+    .partner-toggle-btn {
+      margin-top: 10px;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 9px 14px;
+      border-radius: 12px;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .partner-toggle-btn:hover {
+      border-color: var(--emerald);
+      color: var(--text-primary);
+    }
+
+    .partner-drawer {
+      display: none;
+      margin-top: 12px;
+      text-align: left;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 12px;
+    }
+
+    .partner-drawer.open {
+      display: block;
+    }
+
+    .partner-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: var(--bg-obsidian);
+      border: 1px solid var(--border-subtle);
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+    }
+
+    .partner-info strong {
+      display: block;
+      font-size: 0.86rem;
+      color: var(--text-primary);
+    }
+
+    .partner-info span {
+      font-size: 0.75rem;
+      color: var(--emerald-bright);
+    }
+
+    .partner-go {
+      background: var(--emerald-dim);
+      color: var(--emerald-bright);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .footer {
+      margin-top: auto;
+      padding-top: 32px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .footer strong {
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="brand-header">
+      <svg id="brandShield" class="shield-logo" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Odds Vary Shield Crest">
+        <defs>
+          <linearGradient id="emeraldShieldGrad" x1="18" y1="12" x2="102" y2="108" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#34D399" />
+            <stop offset="55%" stop-color="#10B981" />
+            <stop offset="100%" stop-color="#047857" />
+          </linearGradient>
+        </defs>
+        <path d="M60 10L100 26V58C100 84.5 82.8 104.2 60 112C37.2 104.2 20 84.5 20 58V26L60 10Z" fill="#0B0F15" stroke="url(#emeraldShieldGrad)" stroke-width="6" stroke-linejoin="round" />
+        <path d="M60 20L90 32V57C90 77.6 76.9 93.3 60 100.2V20Z" fill="#FFFFFF" fill-opacity="0.92" />
+        <path d="M31 64L45 48L57 62L89 30" stroke="url(#emeraldShieldGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M74 30H89V45" stroke="url(#emeraldShieldGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <h1 class="brand-title">ODDS VARY</h1>
+      <p class="brand-tagline">The One-Touch Truth Engine. Check real cash-out odds before you play.</p>
+    </header>
+
+    <main class="search-card">
+      <form id="scanForm" autocomplete="off">
+        <div class="input-bubble-wrap">
+          <input
+            id="gameInput"
+            class="input-bubble"
+            type="text"
+            placeholder="Enter game name..."
+            aria-label="Enter game name"
+            required
+          />
+          <button type="button" id="clearBtn" class="clear-btn" aria-label="Clear input">&times;</button>
+        </div>
+        <button type="submit" id="startBtn" class="push-start-btn">
+          <span>CHECK ODDS</span>
+        </button>
+      </form>
+
+      <div class="quick-chips">
+        <button type="button" class="chip" data-game="Lucky Spin Cash Frenzy">Test: Lucky Spin Frenzy</button>
+        <button type="button" class="chip" data-game="Solitaire Cash Arena">Test: Solitaire Arena</button>
+        <button type="button" class="chip" data-game="Mistplay Rewards">Test: Mistplay Rewards</button>
+      </div>
+    </main>
+
+    <section id="scanStatus" class="scan-status" aria-live="polite">
+      <div style="font-weight: 700; font-size: 0.92rem;">Fine-Combing Terms &amp; Running 5,000 Simulations...</div>
+      <div class="progress-track">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+      <div id="telemetryText" class="scan-telemetry-text">Initializing Cakes Sovereign Analytical Engine...</div>
+    </section>
+
+    <section id="verdictCard" class="verdict-card" aria-live="polite">
+      <div class="verdict-top">
+        <div>
+          <div class="game-label">Cash-Out Analysis</div>
+          <div id="resultGameName" class="game-name-display">Game Name</div>
+        </div>
+        <div id="verdictPill" class="verdict-pill">PREDATORY TRAP</div>
+      </div>
+
+      <div class="score-box">
+        <div id="scoreNumber" class="score-number">4%</div>
+        <div id="scoreCaption" class="score-caption">Estimated Real Cash-Out Probability</div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-item">
+          <div id="metricThreshold" class="metric-val">$100.00</div>
+          <div class="metric-lbl">Cash-Out Floor</div>
+        </div>
+        <div class="metric-item">
+          <div id="metricRollover" class="metric-val">500x</div>
+          <div class="metric-lbl">Playthrough</div>
+        </div>
+        <div class="metric-item">
+          <div id="metricYield" class="metric-val">$0.04/hr</div>
+          <div class="metric-lbl">Est. Yield</div>
+        </div>
+      </div>
+
+      <div class="flags-section">
+        <div class="flags-title">Fine-Print Telemetry &amp; Findings</div>
+        <ul id="flagList" class="flag-list"></ul>
+      </div>
+
+      <div class="monetization-box">
+        <div class="monetization-heading">Skip the Traps — Get the Verified Paying List</div>
+        <p class="monetization-sub">Tracked with session sub-IDs. Bounties apply only to completed, non-reversed cash-out actions.</p>
+        <a
+          id="stripeCheckoutLink"
+          class="stripe-checkout-btn"
+          href="https://buy.stripe.com/YOUR_LIVE_099_PAYMENT_LINK"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Unlock Verified Safe List — $0.99
+        </a>
+
+        <button type="button" id="partnerToggleBtn" class="partner-toggle-btn">
+          View Verified Safe Partners (Sub-ID Tracked) &#9662;
+        </button>
+
+        <div id="partnerDrawer" class="partner-drawer open"></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <strong>Odds Vary&trade;</strong> &bull; Powered by <strong>Cakes</strong> &amp; <strong>Deliver All Inc.</strong><br />
+      Delivering at the speed of life.
+    </footer>
+  </div>
+
+  <script>
+    const scanForm = document.getElementById('scanForm');
+    const gameInput = document.getElementById('gameInput');
+    const clearBtn = document.getElementById('clearBtn');
+    const startBtn = document.getElementById('startBtn');
+    const brandShield = document.getElementById('brandShield');
+    const scanStatus = document.getElementById('scanStatus');
+    const progressFill = document.getElementById('progressFill');
+    const telemetryText = document.getElementById('telemetryText');
+    const verdictCard = document.getElementById('verdictCard');
+    const partnerToggleBtn = document.getElementById('partnerToggleBtn');
+    const partnerDrawer = document.getElementById('partnerDrawer');
+
+    // Sub-ID attribution & anti-clawback ledger
+    const SUB_ID_KEY = 'ov_sub_id_v1';
+    let subId = localStorage.getItem(SUB_ID_KEY);
+    if (!subId) {
+      subId = 'ov_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+      localStorage.setItem(SUB_ID_KEY, subId);
+    }
+
+    const stripeLink = document.getElementById('stripeCheckoutLink');
+    if (stripeLink && !stripeLink.href.includes('YOUR_LIVE_099_PAYMENT_LINK')) {
+      const sUrl = new URL(stripeLink.href);
+      sUrl.searchParams.set('client_reference_id', subId);
+      stripeLink.href = sUrl.toString();
+    }
+
+    const VERIFIED_PARTNERS = [
+      {
+        id: 'cashback_verified',
+        name: 'Verified Cashback & Receipt Rewards',
+        detail: '88% Viability • $5.00 Low Cash-Out Floor • Anti-Clawback Guarded',
+        baseUrl: 'https://example.com/partner-alpha',
+        subParam: 'subid'
+      },
+      {
+        id: 'skill_verified',
+        name: 'Verified Skill Trivia & Micro-Tasks',
+        detail: '82% Viability • Transparent PayPal Payouts • CPA Bounty Track',
+        baseUrl: 'https://example.com/partner-beta',
+        subParam: 'click_id'
+      }
+    ];
+
+    function renderPartnerLinks(scannedGame) {
+      partnerDrawer.innerHTML = '';
+      VERIFIED_PARTNERS.forEach((partner) => {
+  Update Odds Vary™ frontend (index.html) for Deliver All Inc. with one-touch game scan, 5,000-trial payout probability scoring, $0.99 safe list checkout link, and sub-ID referral attribution.
